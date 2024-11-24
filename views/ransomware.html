@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulated Ransomware Attack</title>
+</head>
+
+<style>
+  /* Basic Reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background-color: #87CEEB;
+  }
+
+  /* Full-screen Desktop container */
+  .desktop {
+    width: 100vw;
+    height: 100vh;
+    background-color: #C0C0C0;
+    border: 5px solid #000;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpaperaccess.com%2Ffull%2F1536061.jpg&f=1&nofb=1&ipt=829511ba4decd8bc4490a43e4c7c6c1cef3ae88e8bb7e3502e13b686cb70384b&ipo=images');
+    background-size: cover;
+  }
+
+  /* Desktop Background */
+  .desktop-background {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    padding: 20px;
+    gap: 20px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  /* Icons */
+  .icon {
+    text-align: center;
+    width: 70px;
+    cursor: pointer;
+  }
+
+  .icon img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .icon p {
+    font-size: 12px;
+    margin-top: 5px;
+    color: black;
+  }
+
+  /* Popup Window */
+  .popup {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 400px;
+    background-color: white;
+    border: 2px solid #000;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .popup h2 {
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .popup .editor {
+    width: 100%;
+    height: 300px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none;
+  }
+
+  .popup button {
+    display: block;
+    margin: 10px auto;
+    padding: 5px 10px;
+    background-color: #2F4F4F;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  .popup button:hover {
+    background-color: #444;
+  }
+
+  /* Ransomware screen */
+  .ransomware-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: none;
+    text-align: center;
+    padding: 50px;
+    font-size: 20px;
+  }
+
+  .ransomware-screen h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  .ransomware-screen p {
+    font-size: 24px;
+    margin: 10px 0;
+  }
+
+</style>
+
+<body>
+  <div class="desktop">
+    <div class="desktop-background">
+      <div class="icon" id="text-file-1">
+        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvectorified.com%2Fimages%2Fwindows-xp-my-computer-icon-11.png&f=1&nofb=1&ipt=c26798939ba4920290abb1e94d1a8e130358fdee8ec67cc4cb99f50b6009852d&ipo=images" alt="Icon">
+        <p>Text File 1</p>
+      </div>
+      <div class="icon" id="text-file-2">
+        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwindows-xp-desktop.netlify.app%2Fassets%2Fmy_documents_icon.png&f=1&nofb=1&ipt=5bfdbe730f3face962c186dcc83add2b66ed4b06aec7466d77b303e9dd462e74&ipo=images" alt="Icon">
+        <p>Text File 2</p>
+      </div>
+      <div class="icon" id="ransomware-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Scorpion_icon.svg/1200px-Scorpion_icon.svg.png" alt="Ransomware Icon" style="width: 50px; height: 50px;">
+        <p>Ransomware</p>
+      </div>
+    </div>
+
+    <!-- Ransomware screen -->
+    <div class="ransomware-screen" id="ransomware-screen">
+      <h1>This Computer is Encrypted</h1>
+      <p>Your files have been encrypted. To restore access, send 0.5 BTC to the following address:</p>
+      <p><strong>1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</strong></p>
+      <p>Once the payment is received, we will send you the decryption key.</p>
+    </div>
+
+    <!-- Popup Window (Text Editor) -->
+    <div class="popup" id="text-editor-popup">
+      <h2>Text File - Editor</h2>
+      <textarea class="editor" id="text-file-editor" placeholder="Edit your text file here..."></textarea>
+      <button id="save-file">Save</button>
+      <button id="close-file">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Get elements
+    const icons = document.querySelectorAll('.desktop .icon');
+    const ransomwareScreen = document.getElementById('ransomware-screen');
+    const textEditorPopup = document.getElementById('text-editor-popup');
+    const textFileEditor = document.getElementById('text-file-editor');
+    const saveButton = document.getElementById('save-file');
+    const closeButton = document.getElementById('close-file');
+    const ransomwareIcon = document.getElementById('ransomware-icon');
+    let currentFile = null;
+
+    // Show the text editor when clicking on any text file icon
+    const openTextFile = (fileName) => {
+      currentFile = fileName;
+      textFileEditor.value = `This is the content of ${currentFile}. Feel free to edit it.`;
+      textEditorPopup.style.display = 'block';
+    };
+
+    document.getElementById('text-file-1').addEventListener('click', () => openTextFile('Text File 1'));
+    document.getElementById('text-file-2').addEventListener('click', () => openTextFile('Text File 2'));
+
+    // Save the file content
+    saveButton.addEventListener('click', () => {
+      const content = textFileEditor.value;
+      alert(`${currentFile} saved!`);
+    });
+
+    // Close the editor popup without saving
+    closeButton.addEventListener('click', () => {
+      textEditorPopup.style.display = 'none';
+    });
+
+    // Simulate ransomware attack when clicking the ransomware icon
+    ransomwareIcon.addEventListener('click', () => {
+      // Show ransom message
+      ransomwareScreen.style.display = 'block';
+
+      // Encrypt the files and make them read-only
+      document.querySelectorAll('.desktop .icon p').forEach(p => {
+        p.textContent = 'ENCRYPTED';
+      });
+
+      // Encrypt the content of the text editor (replace with random characters)
+      textFileEditor.value = generateRandomString(100);
+
+      // Disable editing after ransomware attack
+      textFileEditor.setAttribute('readonly', true);
+    });
+
+    // Generate random string for encryption
+    function generateRandomString(length) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+  </script>
+</body>
+</html>
