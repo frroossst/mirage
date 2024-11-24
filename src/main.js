@@ -1,8 +1,13 @@
 const { app, BrowserWindow } = require('electron');
+const os = require('os');
+const path = require('path');
 
-let mainWindow;
+let mainWindow, resourceMonitor;
 
 app.on('ready', () => {
+
+    console.log(app.getAppMetrics());
+
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -13,3 +18,9 @@ app.on('ready', () => {
     mainWindow.loadFile('./views/bios.html');
 });
 
+// enable global security settings
+app.enableSandbox();
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit();
+  });
