@@ -10,6 +10,6 @@ app.on('ready', () => {
             nodeIntegration: true,
         },
     });
-    mainWindow.loadFile('index.html');
+    mainWindow.loadFile('./views/desktop.html');
 });
 
