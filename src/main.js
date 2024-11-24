@@ -10,6 +10,6 @@ app.on('ready', () => {
             nodeIntegration: true,
         },
     });
-    mainWindow.loadFile('./views/desktop.html');
+    mainWindow.loadFile('./views/bios.html');
 });
 
