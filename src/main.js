@@ -12,6 +12,7 @@ app.on('ready', () => {
             nodeIntegration: false,
             contextIsolation: true,
         },
+        icon: path.join(__dirname, 'assets/icon.png'),
     });
     mainWindow.loadFile('./views/bios.html');
 });

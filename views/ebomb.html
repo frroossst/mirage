@@ -217,5 +217,78 @@
       popup.style.display = 'none';
     });
   </script>
+
+  <script>
+    function showRestrictedAccessPopup() {
+      // Create popup container
+      const accessPopup = document.createElement('div');
+      accessPopup.style.position = 'fixed';
+      accessPopup.style.top = '0';
+      accessPopup.style.left = '0';
+      accessPopup.style.width = '100%';
+      accessPopup.style.height = '100%';
+      accessPopup.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Add semi-transparent background
+      accessPopup.style.display = 'flex';
+      accessPopup.style.justifyContent = 'center';
+      accessPopup.style.alignItems = 'center';
+      accessPopup.style.zIndex = '1000'; // Ensure it's on top
+  
+      // Add popup content
+      accessPopup.innerHTML = `
+        <div style="
+          position: relative; 
+          width: 400px; 
+          font-family: Tahoma, sans-serif;
+          background-color: #cfe7fc;
+          border: 1px solid #a0c4e6;
+          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);"
+        >
+          <div style="
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background-color: #004e98; 
+            color: white; 
+            padding: 5px; 
+            font-size: 14px; 
+            font-weight: bold;"
+          >
+            <span>Access Popup</span>
+            <button style="
+              background: transparent; 
+              border: none; 
+              color: white; 
+              font-size: 16px; 
+              cursor: pointer; 
+              outline: none;
+              padding: 0;
+              margin: 0;"
+              onclick="this.closest('div').parentElement.remove();"
+            >&times;</button>
+          </div>
+          <div style="padding: 20px; text-align: center;">
+            <h2 style="
+              color: red; 
+              margin: 20px 0; 
+              text-shadow: 1px 1px #ffffff;">Access Denied</h2>
+            <p style="
+              margin-top: 10px; 
+              color: #333333;">You don't have access to open this. Contact your administrator.</p>
+          </div>
+        </div>
+      `;
+  
+      // Append popup to body
+      document.body.appendChild(accessPopup);
+    }
+  
+    // Event listeners for icons
+    document.querySelectorAll('.icon img').forEach(icon => {
+      if (icon.alt === "Icon") { // Adjust this if needed
+        icon.addEventListener('click', showRestrictedAccessPopup);
+      }
+    });
+  </script>
+
 </body>
 </html>
