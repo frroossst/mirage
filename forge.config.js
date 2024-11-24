@@ -8,23 +8,32 @@ module.exports = {
   rebuildConfig: {},
   makers: [
     {
-      name: '@electron-forge/maker-squirrel',
-      config: {},
+      name: '@electron-forge/maker-squirrel', // Windows packaging
+      config: {
+        name: 'emulator', // Set your app's name here
+        icon: './assets/icon.ico', // Set Windows icon
+      },
     },
     {
-      name: '@electron-forge/maker-zip',
+      name: '@electron-forge/maker-zip', // macOS packaging
       platforms: ['darwin'],
+      config: {
+        icon: './assets/icon.icns', // macOS icon
+      },
     },
     {
-      name: '@electron-forge/maker-deb',
+      name: '@electron-forge/maker-deb', // Linux .deb packaging
       config: {
         options: {
-          icon: './assets/icon.png',
+          icon: './assets/icon.png', // Linux icon
+          productName: 'emulator',
+          maintainer: 'Your Name <your.email@example.com>',
+          categories: ['Utility'],
         },
       },
     },
     {
-      name: '@electron-forge/maker-rpm',
+      name: '@electron-forge/maker-rpm', // RPM packaging for Linux
       config: {},
     },
   ],
@@ -33,8 +42,6 @@ module.exports = {
       name: '@electron-forge/plugin-auto-unpack-natives',
       config: {},
     },
-    // Fuses are used to enable/disable various Electron functionality
-    // at package time, before code signing the application
     new FusesPlugin({
       version: FuseVersion.V1,
       [FuseV1Options.RunAsNode]: false,
