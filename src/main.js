@@ -1,18 +1,16 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const os = require('os');
 const path = require('path');
 
 let mainWindow, resourceMonitor;
 
 app.on('ready', () => {
-
-    console.log(app.getAppMetrics());
-
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
-            nodeIntegration: true,
+            nodeIntegration: false,
+            contextIsolation: true,
         },
     });
     mainWindow.loadFile('./views/bios.html');

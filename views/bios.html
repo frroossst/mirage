@@ -81,35 +81,16 @@
       <li onclick="loadSimulation('exit')">Exit</li>
     </ul>
   </div>
-  <div class="footer">Use keyboard or mouse to select an option</div>
+  <div class="footer">Hack responsibly!</div>
 
   <script>
-    function loadSimulation(simulation) {
-      if (simulation === 'exit') {
-        window.close();
-      } else {
-        window.location.href = simulation;
-      }
+    async function loadSimulation(simulation) {
+        if (simulation === 'exit') {
+          window.close();
+        } else {
+          window.location.href = simulation;
+        }
     }
-
-    // Optional keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      const options = document.querySelectorAll('li');
-      let activeIndex = Array.from(options).findIndex(opt => opt.style.textShadow);
-      options.forEach(opt => opt.style.textShadow = '');
-
-      if (e.key === 'ArrowDown') {
-        activeIndex = (activeIndex + 1) % options.length;
-      } else if (e.key === 'ArrowUp') {
-        activeIndex = (activeIndex - 1 + options.length) % options.length;
-      } else if (e.key === 'Enter' && activeIndex >= 0) {
-        options[activeIndex].click();
-      }
-
-      if (activeIndex >= 0) {
-        options[activeIndex].style.textShadow = '0 0 10px lime';
-      }
-    });
   </script>
 </body>
 </html>
