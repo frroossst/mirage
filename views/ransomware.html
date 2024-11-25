@@ -187,9 +187,56 @@
     const closePopupButton = document.getElementById('close-popup');
 
     globalThis.popupCounter = 0;
-    // Show the popup when the ebomb icon is clicked
+
+
+    function getAlphanumericJunk(length) {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return result;
+    }
+
     ransomwareIcon.addEventListener('click', async() => {
-      alert('Ransomware activated!');
+        localStorage.setItem('foo.txt', getAlphanumericJunk(128));
+        localStorage.setItem('bar.txt', getAlphanumericJunk(128));
+
+        // dynamically construct a backgroudn with red backgroudnd 
+        // and white monospaced text with the ransomware message
+        const ransomwareBackground = document.createElement('div');
+        ransomwareBackground.style.position = 'fixed';
+        ransomwareBackground.style.top = '0';
+        ransomwareBackground.style.left = '0';
+        ransomwareBackground.style.width = '100%';
+        ransomwareBackground.style.height = '100%';
+        ransomwareBackground.style.backgroundColor = 'red';
+        ransomwareBackground.style.color = 'white';
+        ransomwareBackground.style.fontFamily = 'monospace';
+        ransomwareBackground.style.fontSize = '24px';
+        ransomwareBackground.style.display = 'flex';
+        ransomwareBackground.style.justifyContent = 'center';
+        ransomwareBackground.style.alignItems = 'center';
+        ransomwareBackground.style.zIndex = '1000'; // Ensure it's on top
+
+        // Add ransomware message
+        ransomwareBackground.innerHTML = `
+          <div style="text-align: center;">
+            <h2>Ransomware Alert</h2>
+            <p>Your files have been encrypted!</p>
+            <p>Send a bazillion buckaroos in bytecoin to dW9mc2NzdHt3ZXJlX2cwbm40X2IzX3IxQ2h9, 
+               and we may be kind enough to give you a decryption key. 
+            </p>
+          </div>
+        `;
+
+        // Append ransomware background to body
+        document.body.appendChild(ransomwareBackground);
+
+        // Close the ransomware background when the "Close" button is clicked
+        ransomwareBackground.addEventListener('click', () => {
+          ransomwareBackground.remove();
+        });
     });
 
     fooTxt.addEventListener('click', async() => {
@@ -279,10 +326,6 @@
         });
     });
 
-
-
-
-
     // Close the popup when the "Close" button is clicked
     closePopupButton.addEventListener('click', () => {
       popup.style.display = 'none';
@@ -291,67 +334,67 @@
 
   <script>
     function showRestrictedAccessPopup() {
-      // Create popup container
-      const accessPopup = document.createElement('div');
-      accessPopup.style.position = 'fixed';
-      accessPopup.style.top = '0';
-      accessPopup.style.left = '0';
-      accessPopup.style.width = '100%';
-      accessPopup.style.height = '100%';
-      accessPopup.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Add semi-transparent background
-      accessPopup.style.display = 'flex';
-      accessPopup.style.justifyContent = 'center';
-      accessPopup.style.alignItems = 'center';
-      accessPopup.style.zIndex = '1000'; // Ensure it's on top
-  
-      // Add popup content
-      accessPopup.innerHTML = `
-        <div style="
-          position: relative; 
-          width: 400px; 
-          font-family: Tahoma, sans-serif;
-          background-color: #cfe7fc;
-          border: 1px solid #a0c4e6;
-          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);"
-        >
-          <div style="
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background-color: #004e98; 
-            color: white; 
-            padding: 5px; 
-            font-size: 14px; 
-            font-weight: bold;"
-          >
-            <span>Access Popup</span>
-            <button style="
-              background: transparent; 
-              border: none; 
-              color: white; 
-              font-size: 16px; 
-              cursor: pointer; 
-              outline: none;
-              padding: 0;
-              margin: 0;"
-              onclick="this.closest('div').parentElement.remove();"
-            >&times;</button>
-          </div>
-          <div style="padding: 20px; text-align: center;">
-            <h2 style="
-              color: red; 
-              margin: 20px 0; 
-              text-shadow: 1px 1px #ffffff;">Access Denied</h2>
-            <p style="
-              margin-top: 10px; 
-              color: #333333;">You don't have access to open this. Contact your administrator.</p>
-          </div>
-        </div>
-      `;
-  
-      // Append popup to body
-      document.body.appendChild(accessPopup);
-    }
+        // Create popup container
+        const accessPopup = document.createElement('div');
+        accessPopup.style.position = 'fixed';
+        accessPopup.style.top = '0';
+        accessPopup.style.left = '0';
+        accessPopup.style.width = '100%';
+        accessPopup.style.height = '100%';
+        accessPopup.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Add semi-transparent background
+        accessPopup.style.display = 'flex';
+        accessPopup.style.justifyContent = 'center';
+        accessPopup.style.alignItems = 'center';
+        accessPopup.style.zIndex = '1000'; // Ensure it's on top
+
+        // Add popup content
+        accessPopup.innerHTML = `
+            <div style="
+              position: relative; 
+              width: 400px; 
+              font-family: Tahoma, sans-serif;
+              background-color: #cfe7fc;
+              border: 1px solid #a0c4e6;
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);"
+            >
+              <div style="
+                display: flex; 
+                justify-content: space-between; 
+                align-items: center; 
+                background-color: #004e98; 
+                color: white; 
+                padding: 5px; 
+                font-size: 14px; 
+                font-weight: bold;"
+              >
+                <span>Access Popup</span>
+                <button style="
+                  background: transparent; 
+                  border: none; 
+                  color: white; 
+                  font-size: 16px; 
+                  cursor: pointer; 
+                  outline: none;
+                  padding: 0;
+                  margin: 0;"
+                  onclick="document.body.removeChild(this.closest('div').parentElement.parentElement);"
+                >&times;</button>
+              </div>
+              <div style="padding: 20px; text-align: center;">
+                <h2 style="
+                  color: red; 
+                  margin: 20px 0; 
+                  text-shadow: 1px 1px #ffffff;">Access Denied</h2>
+                <p style="
+                  margin-top: 10px; 
+                  color: #333333;">You don't have access to open this. Contact your administrator.</p>
+              </div>
+            </div>
+            `;
+
+            // Append popup to body
+            document.body.appendChild(accessPopup);
+        }
   
     // Event listeners for icons
     document.querySelectorAll('.icon img').forEach(icon => {
