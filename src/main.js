@@ -3,7 +3,8 @@ const os = require('os');
 const path = require('path');
 const v8 = require('v8');
 
-let mainWindow;
+let mainWindow, monitorWindow, isMonWinActive;
+isMonWinActive = false;
 
 const sizeInGB = 4;
 let sizeInBytes = sizeInGB * 1024
@@ -21,12 +22,26 @@ app.on('ready', () => {
     });
     mainWindow.loadFile('./views/bios.html');
 
-    monitorWindow = new BrowserWindow({ webPreferences: { preload: __dirname + '/preload.js' } });
+    monitorWindow = new BrowserWindow({ webPreferences: { preload: __dirname + '/preload.js', nodeIntegration: false, contextIsolation: true } });
+    isMonWinActive = true;
+
+    // kill monitor when main window is closed
+    mainWindow.on('closed', () => {
+        monitorWindow.close();
+    });
+
+    monitorWindow.on('closed', () => {
+        isMonWinActive = false;
+    });
+
     monitorWindow.loadFile('./views/monitor.html');
     setInterval(() => {
+        if (!isMonWinActive) return;
+
         const memoryUsage = process.memoryUsage();
         const cpuUsage = process.cpuUsage();
         const heapStats = v8.getHeapStatistics();
+
         monitorWindow.webContents.send('resource-usage', { memoryUsage, cpuUsage, heapStats });
     }, 250);
 

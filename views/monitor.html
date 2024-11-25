@@ -4,13 +4,52 @@
     <meta charset="UTF-8">
     <title>Resource Monitor</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        #stats { white-space: pre-wrap; }
+        body {
+            font-family: "Tahoma", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #d6e9f8, #94c3eb);
+            color: #000;
+        }
+        #container {
+            margin: 50px auto;
+            width: 500px;
+            padding: 20px;
+            background: #e0ebf5;
+            border: 2px solid #5b8dd6;
+            border-radius: 10px;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 1.5em;
+            color: #205093;
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #5b8dd6;
+        }
+        #stats {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            background: #f8faff;
+            padding: 10px;
+            border: 1px solid #5b8dd6;
+            border-radius: 5px;
+            box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
     </style>
 </head>
 <body>
-    <h1>Resource Monitor</h1>
-    <div id="stats">Loading...</div>
+    <div id="container">
+        <h1>Resource Monitor</h1>
+        <div id="stats">Loading...</div>
+        <footer>Windows XP Style Resource Monitor</footer>
+    </div>
     <script>
         window.api.onResourceUsage((data) => {
             document.getElementById('stats').innerText = `
