@@ -4,29 +4,110 @@
     <meta charset="UTF-8">
     <title>Resource Monitor</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        #stats { white-space: pre-wrap; }
+        body {
+            font-family: Tahoma, sans-serif;
+            background-color: #0078d7; /* Classic XP blue */
+            color: black;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #container {
+            background: linear-gradient(to bottom, #ffffff, #d6e6f2);
+            border: 2px solid #94b5d8;
+            box-shadow: inset -2px -2px 5px #ffffff, inset 2px 2px 5px #94b5d8, 4px 4px 15px rgba(0, 0, 0, 0.5);
+            border-radius: 6px;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 18px;
+            margin: 0;
+            color: #1a4d8e;
+            text-shadow: 1px 1px #ffffff;
+            border-bottom: 1px solid #94b5d8;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        .gauge-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        canvas {
+            width: 200px !important;
+            height: 200px !important;
+        }
     </style>
 </head>
 <body>
-    <h1>Resource Monitor</h1>
-    <div id="stats">Loading...</div>
+    <div id="container">
+        <h1>Resource Monitor</h1>
+        <div class="gauge-container">
+            <canvas id="memoryGauge"></canvas>
+            <canvas id="cpuGauge"></canvas>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-doughnutlabel"></script>
     <script>
+        // Utility function to create gauge
+        function createGauge(ctx, maxValue, title) {
+            return new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        data: [0, maxValue],
+                        backgroundColor: ['#1a4d8e', '#d6e6f2'],
+                        borderWidth: 0,
+                        circumference: 180,
+                        rotation: 270
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '80%',
+                    plugins: {
+                        doughnutlabel: {
+                            labels: [
+                                { text: title, font: { size: 12 }, color: '#1a4d8e' },
+                                { text: '0%', font: { size: 16 }, color: '#1a4d8e' }
+                            ]
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize charts
+        const memoryGauge = createGauge(document.getElementById('memoryGauge'), 100, 'Memory Usage');
+        const cpuGauge = createGauge(document.getElementById('cpuGauge'), 100, 'CPU Usage');
+
+        // Function to update gauges dynamically
+        function updateGauge(gauge, value, maxValue) {
+            gauge.data.datasets[0].data[0] = value;
+            gauge.data.datasets[0].data[1] = maxValue - value;
+            gauge.options.plugins.doughnutlabel.labels[1].text = `${((value / maxValue) * 100).toFixed(1)}%`;
+            gauge.update();
+        }
+
+        // Simulate data fetching and updating gauges
         window.api.onResourceUsage((data) => {
-            document.getElementById('stats').innerText = `
-                Memory Usage:
-                - RSS: ${(data.memoryUsage.rss / 1024 / 1024).toFixed(2)} MB
-                - Heap Used: ${(data.memoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MB
-                - Heap Total: ${(data.memoryUsage.heapTotal / 1024 / 1024).toFixed(2)} MB
-                
-                CPU Usage:
-                - User: ${(data.cpuUsage.user / 1000).toFixed(2)} ms
-                - System: ${(data.cpuUsage.system / 1000).toFixed(2)} ms
-                
-                Heap Statistics:
-                - Total Heap Size: ${(data.heapStats.total_heap_size / 1024 / 1024).toFixed(2)} MB
-                - Used Heap Size: ${(data.heapStats.used_heap_size / 1024 / 1024).toFixed(2)} MB
-            `;
+            const memoryUsed = data.memoryUsage.heapUsed / data.memoryUsage.heapTotal;
+            const cpuUsed = data.cpuUsage.user / (data.cpuUsage.user + data.cpuUsage.system);
+
+            updateGauge(memoryGauge, memoryUsed * 100, 100);
+            updateGauge(cpuGauge, cpuUsed * 100, 100);
         });
     </script>
 </body>
