@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resource Monitor</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #stats { white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>Resource Monitor</h1>
+    <div id="stats">Loading...</div>
+    <script>
+        window.api.onResourceUsage((data) => {
+            document.getElementById('stats').innerText = `
+                Memory Usage:
+                - RSS: ${(data.memoryUsage.rss / 1024 / 1024).toFixed(2)} MB
+                - Heap Used: ${(data.memoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MB
+                - Heap Total: ${(data.memoryUsage.heapTotal / 1024 / 1024).toFixed(2)} MB
+                
+                CPU Usage:
+                - User: ${(data.cpuUsage.user / 1000).toFixed(2)} ms
+                - System: ${(data.cpuUsage.system / 1000).toFixed(2)} ms
+                
+                Heap Statistics:
+                - Total Heap Size: ${(data.heapStats.total_heap_size / 1024 / 1024).toFixed(2)} MB
+                - Used Heap Size: ${(data.heapStats.used_heap_size / 1024 / 1024).toFixed(2)} MB
+            `;
+        });
+    </script>
+</body>
+</html>
