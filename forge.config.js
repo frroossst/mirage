@@ -10,7 +10,7 @@ module.exports = {
     {
       name: '@electron-forge/maker-squirrel', // Windows packaging
       config: {
-        name: 'emulator', // Set your app's name here
+        name: 'mirage', // Set your app's name here
         icon: './assets/icon.ico', // Set Windows icon
       },
     },
@@ -26,15 +26,18 @@ module.exports = {
       config: {
         options: {
           icon: './assets/icon.png', // Linux icon
-          productName: 'emulator',
-          maintainer: 'Your Name <your.email@example.com>',
-          categories: ['Utility'],
+          productName: 'mirage',
         },
       },
     },
     {
       name: '@electron-forge/maker-rpm', // RPM packaging for Linux
-      config: {},
+      config: {
+        options: {
+          icon: './assets/icon.png', // Linux icon
+          productName: 'mirage',
+        },
+      },
     },
   ],
   plugins: [
