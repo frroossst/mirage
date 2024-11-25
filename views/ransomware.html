@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulated Ransomware Attack</title>
+  <title>Old School Desktop</title>
 </head>
 
 <style>
@@ -52,12 +52,12 @@
   .icon {
     text-align: center;
     width: 70px;
-    cursor: pointer;
   }
 
   .icon img {
     width: 50px;
     height: 50px;
+    cursor: pointer;
   }
 
   .icon p {
@@ -73,8 +73,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
-    height: 400px;
+    width: 300px;
+    height: 200px;
     background-color: white;
     border: 2px solid #000;
     padding: 10px;
@@ -86,14 +86,9 @@
     font-size: 18px;
   }
 
-  .popup .editor {
-    width: 100%;
-    height: 300px;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    padding: 10px;
-    box-sizing: border-box;
-    resize: none;
+  .popup p {
+    font-size: 14px;
+    text-align: center;
   }
 
   .popup button {
@@ -110,29 +105,28 @@
     background-color: #444;
   }
 
-  /* Ransomware screen */
-  .ransomware-screen {
+  /* styles for an open text document */
+  .text-document {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 200px;
+    background-color: white;
+    border: 2px solid #000;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-document h2 {
     text-align: center;
-    padding: 50px;
-    font-size: 20px;
+    font-size: 18px;
   }
 
-  .ransomware-screen h1 {
-    font-size: 48px;
-    margin-bottom: 20px;
-  }
-
-  .ransomware-screen p {
-    font-size: 24px;
-    margin: 10px 0;
+  .text-document p {
+    font-size: 14px;
+    text-align: center;
   }
 
 </style>
@@ -140,95 +134,232 @@
 <body>
   <div class="desktop">
     <div class="desktop-background">
-      <div class="icon" id="text-file-1">
+      <div class="icon">
         <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvectorified.com%2Fimages%2Fwindows-xp-my-computer-icon-11.png&f=1&nofb=1&ipt=c26798939ba4920290abb1e94d1a8e130358fdee8ec67cc4cb99f50b6009852d&ipo=images" alt="Icon">
-        <p>Text File 1</p>
+        <p>My Computer</p>
       </div>
-      <div class="icon" id="text-file-2">
+      <div class="icon">
         <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwindows-xp-desktop.netlify.app%2Fassets%2Fmy_documents_icon.png&f=1&nofb=1&ipt=5bfdbe730f3face962c186dcc83add2b66ed4b06aec7466d77b303e9dd462e74&ipo=images" alt="Icon">
-        <p>Text File 2</p>
+        <p>Documents</p>
       </div>
+      <div class="icon">
+        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogodix.com%2Flogo%2F49412.png&f=1&nofb=1&ipt=790035a4a6e9c32f42d3d75797e36b5481a811c248f601d640b68bf8214d564f&ipo=images" alt="Icon">
+        <p>Internet</p>
+      </div>
+
+      <div class="icon" id="foo.txt">
+        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fopenclipart.org%2Fimage%2F2400px%2Fsvg_to_png%2F97543%2Ftext-file-icon.png&f=1&nofb=1&ipt=69d0a8d666fd0a9e7d744fa442663ebe73af79a2083768c98c0777bd73c050ab&ipo=images" alt="text">
+        <p>foo.txt</p>
+      </div>
+
+      <div class="icon" id="bar.txt">
+        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fopenclipart.org%2Fimage%2F2400px%2Fsvg_to_png%2F97543%2Ftext-file-icon.png&f=1&nofb=1&ipt=69d0a8d666fd0a9e7d744fa442663ebe73af79a2083768c98c0777bd73c050ab&ipo=images" alt="text">
+        <p>bar.txt</p>
+      </div>
+
       <div class="icon" id="ransomware-icon">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Scorpion_icon.svg/1200px-Scorpion_icon.svg.png" alt="Ransomware Icon" style="width: 50px; height: 50px;">
+        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F3068%2F3068223.png&f=1&nofb=1&ipt=12d5eee5606162144edef74b25533317af7ffa7c1ad0dc986cd78a5626269665&ipo=images" alt="ebomb">
         <p>Ransomware</p>
       </div>
     </div>
 
-    <!-- Ransomware screen -->
-    <div class="ransomware-screen" id="ransomware-screen">
-      <h1>This Computer is Encrypted</h1>
-      <p>Your files have been encrypted. To restore access, send 0.5 BTC to the following address:</p>
-      <p><strong>1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</strong></p>
-      <p>Once the payment is received, we will send you the decryption key.</p>
+    <!-- Popup Window -->
+    <div class="popup" id="popup">
+      <h2>EBomb Activated</h2>
+      <p>Warning: This is a simulated EBomb!</p>
+      <button id="close-popup">Close</button>
     </div>
 
-    <!-- Popup Window (Text Editor) -->
-    <div class="popup" id="text-editor-popup">
-      <h2>Text File - Editor</h2>
-      <textarea class="editor" id="text-file-editor" placeholder="Edit your text file here..."></textarea>
-      <button id="save-file">Save</button>
-      <button id="close-file">Close</button>
-    </div>
   </div>
 
+
   <script>
-    // Get elements
-    const icons = document.querySelectorAll('.desktop .icon');
-    const ransomwareScreen = document.getElementById('ransomware-screen');
-    const textEditorPopup = document.getElementById('text-editor-popup');
-    const textFileEditor = document.getElementById('text-file-editor');
-    const saveButton = document.getElementById('save-file');
-    const closeButton = document.getElementById('close-file');
+
+    localStorage.setItem('foo.txt', 'This is foo.txt');
+    localStorage.setItem('bar.txt', 'This is bar.txt');
+
+    // Get the ebomb icon and popup elements
     const ransomwareIcon = document.getElementById('ransomware-icon');
-    let currentFile = null;
+    const fooTxt = document.getElementById('foo.txt');
+    const barTxt = document.getElementById('bar.txt');
 
-    // Show the text editor when clicking on any text file icon
-    const openTextFile = (fileName) => {
-      currentFile = fileName;
-      textFileEditor.value = `This is the content of ${currentFile}. Feel free to edit it.`;
-      textEditorPopup.style.display = 'block';
-    };
+    const popup = document.getElementById('popup');
+    const closePopupButton = document.getElementById('close-popup');
 
-    document.getElementById('text-file-1').addEventListener('click', () => openTextFile('Text File 1'));
-    document.getElementById('text-file-2').addEventListener('click', () => openTextFile('Text File 2'));
-
-    // Save the file content
-    saveButton.addEventListener('click', () => {
-      const content = textFileEditor.value;
-      alert(`${currentFile} saved!`);
+    globalThis.popupCounter = 0;
+    // Show the popup when the ebomb icon is clicked
+    ransomwareIcon.addEventListener('click', async() => {
+      alert('Ransomware activated!');
     });
 
-    // Close the editor popup without saving
-    closeButton.addEventListener('click', () => {
-      textEditorPopup.style.display = 'none';
+    fooTxt.addEventListener('click', async() => {
+        // close foo.txt if open
+        const barTextDocument = document.querySelector('.text-document');
+        if (barTextDocument) {
+          barTextDocument.remove();
+        }
+
+        // text area for foo.txt with save and close buttons
+        const textDocument = document.createElement('div');
+        textDocument.className = 'text-document';
+        textDocument.innerHTML = `
+          <h2>foo.txt</h2>
+          <textarea style="width: 100%; height: 100px;"></textarea>
+          <button class="btn" id="save-foo">Save</button>
+          <button class="btn" id="close-foo">Close</button>
+        `;
+
+        // load from local storage
+        const fooContent = localStorage.getItem('foo.txt');
+        textDocument.querySelector('textarea').value = fooContent;
+
+        // Append text document to body
+        document.body.appendChild(textDocument);
+
+        // Get the save and close buttons
+        const saveFooButton = document.getElementById('save-foo');
+        const closeFooButton = document.getElementById('close-foo');
+
+        // Save the text content to a file when the "Save" button is clicked
+        saveFooButton.addEventListener('click', () => {
+          const textArea = textDocument.querySelector('textarea');
+          const textContent = textArea.value;
+
+          // save to local storage
+          localStorage.setItem('foo.txt', textContent);
+        });
+
+        // Close the text document when the "Close" button is clicked
+        closeFooButton.addEventListener('click', () => {
+          textDocument.remove();
+        });
     });
 
-    // Simulate ransomware attack when clicking the ransomware icon
-    ransomwareIcon.addEventListener('click', () => {
-      // Show ransom message
-      ransomwareScreen.style.display = 'block';
+    // do similar for bar.txt
+    barTxt.addEventListener('click', async() => {
+        // close foo.txt if open
+        const fooTextDocument = document.querySelector('.text-document');
+        if (fooTextDocument) {
+          fooTextDocument.remove();
+        }
 
-      // Encrypt the files and make them read-only
-      document.querySelectorAll('.desktop .icon p').forEach(p => {
-        p.textContent = 'ENCRYPTED';
-      });
+        // text area for foo.txt with save and close buttons
+        const textDocument = document.createElement('div');
+        textDocument.className = 'text-document';
+        textDocument.innerHTML = `
+          <h2>bar.txt</h2>
+          <textarea style="width: 100%; height: 100px;"></textarea>
+          <button class="btn" id="save-foo">Save</button>
+          <button class="btn" id="close-foo">Close</button>
+        `;
 
-      // Encrypt the content of the text editor (replace with random characters)
-      textFileEditor.value = generateRandomString(100);
+        // load from local storage
+        const fooContent = localStorage.getItem('bar.txt');
+        textDocument.querySelector('textarea').value = fooContent;
 
-      // Disable editing after ransomware attack
-      textFileEditor.setAttribute('readonly', true);
+        // Append text document to body
+        document.body.appendChild(textDocument);
+
+        // Get the save and close buttons
+        const saveFooButton = document.getElementById('save-foo');
+        const closeFooButton = document.getElementById('close-foo');
+
+        // Save the text content to a file when the "Save" button is clicked
+        saveFooButton.addEventListener('click', () => {
+          const textArea = textDocument.querySelector('textarea');
+          const textContent = textArea.value;
+
+          // save to local storage
+          localStorage.setItem('bar.txt', textContent);
+        });
+
+        // Close the text document when the "Close" button is clicked
+        closeFooButton.addEventListener('click', () => {
+          textDocument.remove();
+        });
     });
 
-    // Generate random string for encryption
-    function generateRandomString(length) {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return result;
-    }
+
+
+
+
+    // Close the popup when the "Close" button is clicked
+    closePopupButton.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
   </script>
+
+  <script>
+    function showRestrictedAccessPopup() {
+      // Create popup container
+      const accessPopup = document.createElement('div');
+      accessPopup.style.position = 'fixed';
+      accessPopup.style.top = '0';
+      accessPopup.style.left = '0';
+      accessPopup.style.width = '100%';
+      accessPopup.style.height = '100%';
+      accessPopup.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Add semi-transparent background
+      accessPopup.style.display = 'flex';
+      accessPopup.style.justifyContent = 'center';
+      accessPopup.style.alignItems = 'center';
+      accessPopup.style.zIndex = '1000'; // Ensure it's on top
+  
+      // Add popup content
+      accessPopup.innerHTML = `
+        <div style="
+          position: relative; 
+          width: 400px; 
+          font-family: Tahoma, sans-serif;
+          background-color: #cfe7fc;
+          border: 1px solid #a0c4e6;
+          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);"
+        >
+          <div style="
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background-color: #004e98; 
+            color: white; 
+            padding: 5px; 
+            font-size: 14px; 
+            font-weight: bold;"
+          >
+            <span>Access Popup</span>
+            <button style="
+              background: transparent; 
+              border: none; 
+              color: white; 
+              font-size: 16px; 
+              cursor: pointer; 
+              outline: none;
+              padding: 0;
+              margin: 0;"
+              onclick="this.closest('div').parentElement.remove();"
+            >&times;</button>
+          </div>
+          <div style="padding: 20px; text-align: center;">
+            <h2 style="
+              color: red; 
+              margin: 20px 0; 
+              text-shadow: 1px 1px #ffffff;">Access Denied</h2>
+            <p style="
+              margin-top: 10px; 
+              color: #333333;">You don't have access to open this. Contact your administrator.</p>
+          </div>
+        </div>
+      `;
+  
+      // Append popup to body
+      document.body.appendChild(accessPopup);
+    }
+  
+    // Event listeners for icons
+    document.querySelectorAll('.icon img').forEach(icon => {
+      if (icon.alt === "Icon") { // Adjust this if needed
+        icon.addEventListener('click', showRestrictedAccessPopup);
+      }
+    });
+  </script>
+
 </body>
 </html>
