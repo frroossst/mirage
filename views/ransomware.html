@@ -161,6 +161,11 @@
         <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F3068%2F3068223.png&f=1&nofb=1&ipt=12d5eee5606162144edef74b25533317af7ffa7c1ad0dc986cd78a5626269665&ipo=images" alt="ebomb">
         <p>Ransomware</p>
       </div>
+
+      <div class="icon" id="reboot-icon">
+        <img src="https://img.icons8.com/?size=80&id=XeCJg89WxObu&format=png" alt="reboot">
+        <p>Reboot</p>
+      </div>
     </div>
 
     <!-- Popup Window -->
@@ -401,6 +406,12 @@
       if (icon.alt === "Icon") { // Adjust this if needed
         icon.addEventListener('click', showRestrictedAccessPopup);
       }
+    });
+
+    const rebootIcon = document.getElementById('reboot-icon');
+    rebootIcon.addEventListener('click', () => {
+        // replace current page with bios.html
+        window.location.href = 'bios.html';
     });
   </script>
 
