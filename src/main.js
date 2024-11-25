@@ -5,7 +5,9 @@ const v8 = require('v8');
 
 let mainWindow;
 
-app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
+const sizeInGB = 4;
+let sizeInBytes = sizeInGB * 1024
+app.commandLine.appendSwitch('js-flags', '--max-old-space-size=' + sizeInBytes);
 
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
