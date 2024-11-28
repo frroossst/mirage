@@ -129,6 +129,27 @@
     text-align: center;
   }
 
+  .xpbtn {
+    font-family: 'Tahoma', sans-serif;
+    font-size: 12px;
+    color: black;
+    background: linear-gradient(to bottom, #ece9d8, #dcd9c7);
+    border: 2px solid #b4b1a3;
+    border-radius: 3px;
+    padding: 5px 10px;
+    box-shadow: 1px 1px 2px #fff inset, -1px -1px 2px rgba(0, 0, 0, 0.1) inset;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+
+  .xpbtn:hover {
+    background: linear-gradient(to bottom, #dcd9c7, #c8c5b2);
+  }
+
+  .xpbtn:active {
+    background: linear-gradient(to bottom, #dcd9c7, #ece9d8);
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
 </style>
 
 <body>
@@ -238,6 +259,15 @@
         // Append ransomware background to body
         document.body.appendChild(ransomwareBackground);
 
+        // If any text documents are open, close them 
+        const fooTextDocument = document.querySelector('.text-document');
+        const barTextDocument = document.querySelector('.text-document');
+        if (fooTextDocument) {
+          fooTextDocument.remove();
+        } if (barTextDocument) {
+          barTextDocument.remove();
+        }
+
         // Close the ransomware background when the "Close" button is clicked
         ransomwareBackground.addEventListener('click', () => {
           ransomwareBackground.remove();
@@ -257,8 +287,8 @@
         textDocument.innerHTML = `
           <h2>foo.txt</h2>
           <textarea style="width: 100%; height: 100px;"></textarea>
-          <button class="btn" id="save-foo">Save</button>
-          <button class="btn" id="close-foo">Close</button>
+          <button class="xpbtn" id="save-foo">Save</button>
+          <button class="xpbtn" id="close-foo">Close</button>
         `;
 
         // load from local storage
