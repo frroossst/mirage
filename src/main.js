@@ -17,8 +17,11 @@ app.on('ready', () => {
         autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: false,
+            nodeIntegrationInWorker: true,
             contextIsolation: true,
             experimentalFeatures: false,
+            webSecurity: true,
+            allowRunningInsecureContent: false,
         },
         icon: path.join(__dirname, 'assets/icon.png'),
     });
@@ -29,7 +32,9 @@ app.on('ready', () => {
 
     // kill monitor when main window is closed
     mainWindow.on('closed', () => {
-        monitorWindow.close();
+        if (monitorWindow && !monitorWindow.isDestroyed()) {
+            monitorWindow.close();
+        }
     });
 
     monitorWindow.on('closed', () => {
