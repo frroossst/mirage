@@ -6,7 +6,7 @@ const v8 = require('v8');
 let mainWindow, monitorWindow, isMonWinActive;
 isMonWinActive = false;
 
-const sizeInGB = 4;
+const sizeInGB = 8;
 let sizeInBytes = sizeInGB * 1024
 app.commandLine.appendSwitch('js-flags', '--max-old-space-size=' + sizeInBytes);
 
